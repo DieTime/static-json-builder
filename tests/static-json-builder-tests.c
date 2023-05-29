@@ -448,7 +448,16 @@ static MunitResult json_stringify_object_complete(const MunitParameter params[],
     );
     char *string = json_stringify(json);
 
-    munit_assert_string_equal(string, "{\"Null\":null,\"Int\":1,\"Float\":1.100000,\"String\":\"string\",\"Array\":[],\"Object\":{}}");
+    munit_assert_string_equal(string,
+        "{"
+            "\"Null\":null,"
+            "\"Int\":1,"
+            "\"Float\":1.100000,"
+            "\"String\":\"string\","
+            "\"Array\":[],"
+            "\"Object\":{}"
+        "}"
+    );
     free(string);
 
     return MUNIT_OK;
@@ -463,7 +472,7 @@ static MunitResult json_size_null(const MunitParameter params[], void *data)
     Json   json = JsonNull();
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 5);
+    munit_assert_size(size, ==, 4 + 1);
 
     return MUNIT_OK;
 }
@@ -475,7 +484,7 @@ static MunitResult json_size_bool_false(const MunitParameter params[], void *dat
     Json   json = JsonBool(false);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 6);
+    munit_assert_size(size, ==, 5 + 1);
 
     return MUNIT_OK;
 }
@@ -487,7 +496,7 @@ static MunitResult json_size_bool_true(const MunitParameter params[], void *data
     Json   json = JsonBool(true);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 5);
+    munit_assert_size(size, ==, 4 + 1);
 
     return MUNIT_OK;
 }
@@ -499,7 +508,7 @@ static MunitResult json_size_int_negative(const MunitParameter params[], void *d
     Json   json = JsonInt(-12345678);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 10);
+    munit_assert_size(size, ==, 9 + 1);
 
     return MUNIT_OK;
 }
@@ -511,7 +520,7 @@ static MunitResult json_size_int_zero(const MunitParameter params[], void *data)
     Json   json = JsonInt(0);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 2);
+    munit_assert_size(size, ==, 1 + 1);
 
     return MUNIT_OK;
 }
@@ -523,7 +532,7 @@ static MunitResult json_size_int_positive(const MunitParameter params[], void *d
     Json   json = JsonInt(12345678);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 9);
+    munit_assert_size(size, ==, 8 + 1);
 
     return MUNIT_OK;
 }
@@ -535,7 +544,7 @@ static MunitResult json_size_float_negative(const MunitParameter params[], void 
     Json   json = JsonFloat(-1234.567800);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 13);
+    munit_assert_size(size, ==, 12 + 1);
 
     return MUNIT_OK;
 }
@@ -547,7 +556,7 @@ static MunitResult json_size_float_zero(const MunitParameter params[], void *dat
     Json   json = JsonFloat(0.000000);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 9);
+    munit_assert_size(size, ==, 8 + 1);
 
     return MUNIT_OK;
 }
@@ -559,7 +568,7 @@ static MunitResult json_size_float_positive(const MunitParameter params[], void 
     Json  json   = JsonFloat(1234.567800);
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 12);
+    munit_assert_size(size, ==, 11 + 1);
 
     return MUNIT_OK;
 }
@@ -571,7 +580,7 @@ static MunitResult json_size_string_empty(const MunitParameter params[], void *d
     Json   json = JsonString("");
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 3);
+    munit_assert_size(size, ==, 2 + 1);
 
     return MUNIT_OK;
 }
@@ -583,7 +592,7 @@ static MunitResult json_size_string_complete(const MunitParameter params[], void
     Json   json = JsonString("string");
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 9);
+    munit_assert_size(size, ==, 8 + 1);
 
     return MUNIT_OK;
 }
@@ -595,7 +604,7 @@ static MunitResult json_size_array_empty(const MunitParameter params[], void *da
     Json   json = JsonArray();
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 3);
+    munit_assert_size(size, ==, 2 + 1);
 
     return MUNIT_OK;
 }
@@ -614,7 +623,7 @@ static MunitResult json_size_array_complete(const MunitParameter params[], void 
     );
 
     size_t size = json_stingified_size(json);
-    munit_assert_size(size, ==, 33);
+    munit_assert_size(size, ==, 32 + 1);
 
     return MUNIT_OK;
 }
@@ -626,7 +635,7 @@ static MunitResult json_size_object_empty(const MunitParameter params[], void *d
     Json   json = JsonObject();
     size_t size = json_stingified_size(json);
 
-    munit_assert_size(size, ==, 3);
+    munit_assert_size(size, ==, 2 + 1);
 
     return MUNIT_OK;
 }
@@ -645,7 +654,7 @@ static MunitResult json_size_object_complete(const MunitParameter params[], void
     );
 
     size_t size = json_stingified_size(json);
-    munit_assert_size(size, ==, 80);
+    munit_assert_size(size, ==, 79 + 1);
 
     return MUNIT_OK;
 }
