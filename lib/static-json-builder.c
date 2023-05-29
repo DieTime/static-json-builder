@@ -180,8 +180,10 @@ static void json_write_func_for_object(json_value_t *json, char **cursor)
 
 char *json_stringify(json_value_t *json)
 {
+    assert(json && "attempt to stringify json but json is a null pointer");
+
     size_t length = json_size_compute(json);
-    char *buffer = calloc(length + 1, sizeof(char));
+    char  *buffer = calloc(length + 1, sizeof(char));
 
     if (buffer == NULL) {
         return NULL;
@@ -195,10 +197,15 @@ char *json_stringify(json_value_t *json)
 
 void json_stringify_into_buffer(json_value_t *json, char *buffer)
 {
+    assert(json   && "attempt to write json into buffer but json is a null pointer");
+    assert(buffer && "attempt to write json into buffer but buffer is a null pointer");
+
     json_write(json, buffer);
 }
 
 size_t json_stingified_size(json_value_t *json)
 {
+    assert(json && "attempt to get the json string size but json is a null pointer");
+
     return json_size_compute(json) + 1;
 }
