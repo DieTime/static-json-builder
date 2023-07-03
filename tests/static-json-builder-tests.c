@@ -90,7 +90,7 @@ static MunitResult json_float_negative(const MunitParameter params[], void *data
     Json json = JsonFloat(-1234.5678);
 
     munit_assert(json->type == JSON_VALUE_TYPE_FLOAT);
-    munit_assert_float(json->as.floating, ==, -1234.5678);
+    munit_assert_double_equal(json->as.floating, -1234.5678, 4);
 
     return MUNIT_OK;
 }
@@ -102,7 +102,7 @@ static MunitResult json_float_zero(const MunitParameter params[], void *data)
     Json json = JsonFloat(0);
 
     munit_assert(json->type == JSON_VALUE_TYPE_FLOAT);
-    munit_assert_float(json->as.floating, ==, 0);
+    munit_assert_double_equal(json->as.floating, 0, 0);
 
     return MUNIT_OK;
 }
@@ -114,7 +114,7 @@ static MunitResult json_float_positive(const MunitParameter params[], void *data
     Json json = JsonFloat(1234.5678);
 
     munit_assert(json->type == JSON_VALUE_TYPE_FLOAT);
-    munit_assert_float(json->as.floating, ==, 1234.5678);
+    munit_assert_double_equal(json->as.floating, 1234.5678, 4);
 
     return MUNIT_OK;
 }
@@ -177,7 +177,7 @@ static MunitResult json_array_complete(const MunitParameter params[], void *data
     munit_assert_int64(json->as.array->entries[1]->as.integer, ==, 1);
 
     munit_assert(json->as.array->entries[2]->type == JSON_VALUE_TYPE_FLOAT);
-    munit_assert_float(json->as.array->entries[2]->as.floating, ==, 1.1);
+    munit_assert_double_equal(json->as.array->entries[2]->as.floating, 1.1, 1);
 
     munit_assert(json->as.array->entries[3]->type == JSON_VALUE_TYPE_STRING);
     munit_assert_string_equal(json->as.array->entries[3]->as.string, "string");
@@ -228,7 +228,7 @@ static MunitResult json_object_complete(const MunitParameter params[], void *dat
 
     munit_assert_string_equal(json->as.object->props[2]->key, "Float");
     munit_assert(json->as.object->props[2]->entry->type == JSON_VALUE_TYPE_FLOAT);
-    munit_assert_float(json->as.object->props[2]->entry->as.floating, ==, 1.1);
+    munit_assert_double_equal(json->as.object->props[2]->entry->as.floating, 1.1, 1);
 
     munit_assert_string_equal(json->as.object->props[3]->key, "String");
     munit_assert(json->as.object->props[3]->entry->type == JSON_VALUE_TYPE_STRING);
