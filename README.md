@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/supports-single%20header-green?color=%34D058" alt="Single Header Support" />
 </p>
 
-Library for convenient initialization of JSON objects without memory allocations.
+Library for convenient JSON objects initialization without memory allocations.
 
 # 👨‍💻 Usage
 
