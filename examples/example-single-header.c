@@ -5,17 +5,16 @@
 
 int main(void)
 {
-    Json json = JsonObject(                /*     {                                       */
-        JsonProp("entries", JsonArray(     /*        "entries": [                         */
-            JsonNull(),                    /*            null,                            */
-            JsonBool(true),                /*            true,                            */
-            JsonInt(1),                    /*            1,                               */
-            JsonFloat(1.1),                /*            1.000000,                        */
-            JsonString("string")           /*            "string",                        */
-        ))                                 /*         ],                                  */
-    );                                     /*     },                                      */
+    Json json = JsonObject(                /*  {                                 */
+        JsonProp("items", JsonArray(       /*     "items": [                     */
+            JsonNull(),                    /*         null,                      */
+            JsonBool(true),                /*         true,                      */
+            JsonInt(1),                    /*         1,                         */
+            JsonString("hello")            /*         "hello",                   */
+        ))                                 /*      ],                            */
+    );                                     /*  },                                */
 
-    char *string = json_stringify(json);   /* {"entries":[null,true,1,1.000000,"string"]} */
+    char *string = json_stringify(json);   /*  {"items":[null,true,1,"hello"]}  */
     printf("%s\n", string);
 
     free(string);
