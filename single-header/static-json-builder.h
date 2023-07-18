@@ -146,7 +146,7 @@ struct json_prop_t
  * @return String representation of the target json or NULL on string allocation error
  * @note You need to release the string allocated by this method
  */
-char *json_stringify(json_value_t *json);
+static inline char *json_stringify(json_value_t *json);
 
 /**
  * Serializes target json into a string and puts the result into a buffer.
@@ -155,7 +155,7 @@ char *json_stringify(json_value_t *json);
  * @param buffer Buffer where you want to put the string json representation
  * @note You can find out how big the allocated buffer should be with `json_stingified_size(...)` method
  */
-void json_stringify_into_buffer(json_value_t *json, char *buffer);
+static inline void json_stringify_into_buffer(json_value_t *json, char *buffer);
 
 /**
  * Computes the size of the string representation of the json.
@@ -163,20 +163,20 @@ void json_stringify_into_buffer(json_value_t *json, char *buffer);
  * @param json The target json for which you want to compute the size of the string representation
  * @return the size of the string representation of the target json
  */
-size_t json_stingified_size(json_value_t *json);
+static inline size_t json_stingified_size(json_value_t *json);
 
 typedef void (*json_size_compute_func_t) (json_value_t *json, size_t *size);
 typedef void (*json_write_func_t)        (json_value_t *json, char  **cursor);
 
-void json_size_compute_func_for_null     (json_value_t *json, size_t *size);
-void json_size_compute_func_for_bool     (json_value_t *json, size_t *size);
-void json_size_compute_func_for_int      (json_value_t *json, size_t *size);
-void json_size_compute_func_for_floating (json_value_t *json, size_t *size);
-void json_size_compute_func_for_string   (json_value_t *json, size_t *size);
-void json_size_compute_func_for_array    (json_value_t *json, size_t *size);
-void json_size_compute_func_for_object   (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_null     (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_bool     (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_int      (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_floating (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_string   (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_array    (json_value_t *json, size_t *size);
+static inline void json_size_compute_func_for_object   (json_value_t *json, size_t *size);
 
-const json_size_compute_func_t json_size_compute_func_by_type[JSON_VALUE_TYPE_MAX] = {
+static const json_size_compute_func_t json_size_compute_func_by_type[JSON_VALUE_TYPE_MAX] = {
     [JSON_VALUE_TYPE_NULL]   = json_size_compute_func_for_null,
     [JSON_VALUE_TYPE_BOOL]   = json_size_compute_func_for_bool,
     [JSON_VALUE_TYPE_INT]    = json_size_compute_func_for_int,
@@ -186,15 +186,15 @@ const json_size_compute_func_t json_size_compute_func_by_type[JSON_VALUE_TYPE_MA
     [JSON_VALUE_TYPE_OBJECT] = json_size_compute_func_for_object,
 };
 
-void json_write_func_for_null     (json_value_t *json, char **cursor);
-void json_write_func_for_bool     (json_value_t *json, char **cursor);
-void json_write_func_for_int      (json_value_t *json, char **cursor);
-void json_write_func_for_floating (json_value_t *json, char **cursor);
-void json_write_func_for_string   (json_value_t *json, char **cursor);
-void json_write_func_for_array    (json_value_t *json, char **cursor);
-void json_write_func_for_object   (json_value_t *json, char **cursor);
+static inline void json_write_func_for_null     (json_value_t *json, char **cursor);
+static inline void json_write_func_for_bool     (json_value_t *json, char **cursor);
+static inline void json_write_func_for_int      (json_value_t *json, char **cursor);
+static inline void json_write_func_for_floating (json_value_t *json, char **cursor);
+static inline void json_write_func_for_string   (json_value_t *json, char **cursor);
+static inline void json_write_func_for_array    (json_value_t *json, char **cursor);
+static inline void json_write_func_for_object   (json_value_t *json, char **cursor);
 
-const json_write_func_t json_write_func_by_type[JSON_VALUE_TYPE_MAX] = {
+static const json_write_func_t json_write_func_by_type[JSON_VALUE_TYPE_MAX] = {
     [JSON_VALUE_TYPE_NULL]   = json_write_func_for_null,
     [JSON_VALUE_TYPE_BOOL]   = json_write_func_for_bool,
     [JSON_VALUE_TYPE_INT]    = json_write_func_for_int,
@@ -204,47 +204,47 @@ const json_write_func_t json_write_func_by_type[JSON_VALUE_TYPE_MAX] = {
     [JSON_VALUE_TYPE_OBJECT] = json_write_func_for_object,
 };
 
-size_t json_size_compute(json_value_t *json)
+static inline size_t json_size_compute(json_value_t *json)
 {
     size_t size = 0;
     json_size_compute_func_by_type[json->type](json, &size);
     return size;
 }
 
-size_t json_write(json_value_t *json, char *buffer)
+static inline size_t json_write(json_value_t *json, char *buffer)
 {
     char *cursor = buffer;
     json_write_func_by_type[json->type](json, &cursor);
     return (size_t) (cursor - buffer);
 }
 
-void json_size_compute_func_for_null(json_value_t *json,  size_t *size)
+static inline void json_size_compute_func_for_null(json_value_t *json,  size_t *size)
 {
     (void) json;
     *size += strlen("null");
 }
 
-void json_size_compute_func_for_bool(json_value_t *json, size_t *size)
+static inline void json_size_compute_func_for_bool(json_value_t *json, size_t *size)
 {
     *size += json->as.boolean ? strlen("true") : strlen("false");
 }
 
-void json_size_compute_func_for_int(json_value_t *json, size_t *size)
+static inline void json_size_compute_func_for_int(json_value_t *json, size_t *size)
 {
     *size += snprintf(NULL, 0, "%" PRId64, json->as.integer);
 }
 
-void json_size_compute_func_for_floating(json_value_t *json, size_t *size)
+static inline void json_size_compute_func_for_floating(json_value_t *json, size_t *size)
 {
     *size += snprintf(NULL, 0, "%f", json->as.floating);
 }
 
-void json_size_compute_func_for_string(json_value_t *json, size_t *size)
+static inline void json_size_compute_func_for_string(json_value_t *json, size_t *size)
 {
     *size += strlen("\"") + strlen(json->as.string) + strlen("\"");
 }
 
-void json_size_compute_func_for_array(json_value_t *json, size_t *size)
+static inline void json_size_compute_func_for_array(json_value_t *json, size_t *size)
 {
     *size += strlen("[");
 
@@ -259,7 +259,7 @@ void json_size_compute_func_for_array(json_value_t *json, size_t *size)
     *size += strlen("]");
 }
 
-void json_size_compute_func_for_object(json_value_t *json, size_t *size)
+static inline void json_size_compute_func_for_object(json_value_t *json, size_t *size)
 {
     *size += strlen("{");
 
@@ -277,32 +277,32 @@ void json_size_compute_func_for_object(json_value_t *json, size_t *size)
     *size += strlen("}");
 }
 
-void json_write_func_for_null(json_value_t *json, char **cursor)
+static inline void json_write_func_for_null(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, json_size_compute(json) + 1, "%s", "null");
 }
 
-void json_write_func_for_bool(json_value_t *json, char **cursor)
+static inline void json_write_func_for_bool(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, json_size_compute(json) + 1, "%s", json->as.boolean ? "true" : "false");
 }
 
-void json_write_func_for_int(json_value_t *json, char **cursor)
+static inline void json_write_func_for_int(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, json_size_compute(json) + 1, "%" PRId64, json->as.integer);
 }
 
-void json_write_func_for_floating(json_value_t *json, char **cursor)
+static inline void json_write_func_for_floating(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, json_size_compute(json) + 1, "%f", json->as.floating);
 }
 
-void json_write_func_for_string(json_value_t *json, char **cursor)
+static inline void json_write_func_for_string(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, json_size_compute(json) + 1, "\"%s\"", json->as.string);
 }
 
-void json_write_func_for_array(json_value_t *json, char **cursor)
+static inline void json_write_func_for_array(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, 2, "%c", '[');
 
@@ -319,7 +319,7 @@ void json_write_func_for_array(json_value_t *json, char **cursor)
     *cursor += snprintf(*cursor, 2, "%c", ']');
 }
 
-void json_write_func_for_object(json_value_t *json, char **cursor)
+static inline void json_write_func_for_object(json_value_t *json, char **cursor)
 {
     *cursor += snprintf(*cursor, 2, "%c", '{');
 
@@ -337,7 +337,7 @@ void json_write_func_for_object(json_value_t *json, char **cursor)
     *cursor += snprintf(*cursor, 2, "%c", '}');
 }
 
-char *json_stringify(json_value_t *json)
+static inline char *json_stringify(json_value_t *json)
 {
     assert(json && "attempt to stringify json but json is a null pointer");
 
@@ -354,7 +354,7 @@ char *json_stringify(json_value_t *json)
     return buffer;
 }
 
-void json_stringify_into_buffer(json_value_t *json, char *buffer)
+static inline void json_stringify_into_buffer(json_value_t *json, char *buffer)
 {
     assert(json   && "attempt to write json into buffer but json is a null pointer");
     assert(buffer && "attempt to write json into buffer but buffer is a null pointer");
@@ -362,7 +362,7 @@ void json_stringify_into_buffer(json_value_t *json, char *buffer)
     json_write(json, buffer);
 }
 
-size_t json_stingified_size(json_value_t *json)
+static inline size_t json_stingified_size(json_value_t *json)
 {
     assert(json && "attempt to get the json string size but json is a null pointer");
 
