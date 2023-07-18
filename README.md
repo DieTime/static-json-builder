@@ -63,7 +63,7 @@ $ sudo meson install
 
 The library supports pkg-config, which makes linking easier and more convenient.
 
->👍 [Single header](single-header/c-flags.h) version is also supported!
+>👍 [Single header](single-header/static-json-builder.h) version is also supported!
 
 ```cmake
 cmake_minimum_required(VERSION 3.14)
